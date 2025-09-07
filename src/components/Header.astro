@@ -4,96 +4,220 @@ import { Icon } from 'astro-icon/components';
 import DarkModeToggle from "@components/DarkModeToggle.astro";
 ---
 
-<!-- ============================================ --><!--                 Navigation                   --><!-- ============================================ -->
+<!-- ============================================ -->
+<!--                 Navigation                   -->
+<!-- ============================================ -->
 <header id="cs-navigation">
-  <div class="cs-container">
-    <!--Nav Logo-->
-    <a href="/" class="cs-logo" aria-label="back to home">
-      <img
-        src="https://images.pexels.com/photos/1002703/pexels-photo-1002703.jpeg?auto=compress&cs=tinysrgb&w=150&h=40"
-        alt="Calloway's Nursery"
-        width="150"
-        height="40"
-        aria-hidden="true"
-        decoding="async"
-      />
-    </a>
-    <!--Navigation List-->
-    <nav class="cs-nav" role="navigation">
-      <!--Mobile Nav Toggle-->
-      <button class="cs-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="cs-expanded-ul" aria-label="Toggle mobile menu.">
-        <div class="cs-box" aria-hidden="true">
-          <span class="cs-line cs-line1" aria-hidden="true"></span>
-          <span class="cs-line cs-line2" aria-hidden="true"></span>
-          <span class="cs-line cs-line3" aria-hidden="true"></span>
-        </div>
-      </button>
-      <!-- If you want to use another navigation stitch and enjoy the benefits of dynamic routing, replace the .cs-ul-wrapper in the navigation stitch with this one below -->
-      <div class="cs-ul-wrapper">
-        <ul id="cs-expanded-ul" class="cs-ul">
-          {navData.map((entry) => (
-            <li
-              class:list={[
-                "cs-li",
-                { "cs-dropdown": entry.children?.length > 0 },
-              ]}
-              
-            >
-              {entry.children?.length > 0 ? (
-                // If entry has children in navData.json, create a button and a dropdown icon
-                <button
-                aria-expanded="false"
-                aria-controls={`submenu-${entry.key}`}
-                  class:list={[
-                    "cs-li-link cs-dropdown-button",
-                    { "cs-active": Astro.url.pathname.includes(entry.url)},
-                  ]}
-                >
-                  {entry.key}
-                  <Icon name="mdi--caret" class="cs-drop-icon" />
-                </button>
-              ) : (
-                // If entry does not have children in navData.json, create an anchor
-                <a
-                  href={entry.url}
-                  class:list={[
-                    "cs-li-link",
-                    { "cs-active": Astro.url.pathname === entry.url },
-                  ]}
-                  aria-current={Astro.url.pathname === entry.url ? "page" : undefined}
-                >
-                  {entry.key}
-                </a>
-              )}
-              
-              {entry.children?.length > 0 && (
-                // If entry has children in navData.json, create a drop down menu
-                <ul id={`submenu-${entry.key}`} class="cs-drop-ul">
-                  {entry.children.map((child) => (
-                    <li class="cs-drop-li">
-                      <a 
-                        href={child.url} 
-                        class="cs-li-link cs-drop-link"
-                        aria-current={Astro.url.pathname === child.url ? "page" : undefined}
-                      >
-                        {child.key}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
+  <!-- Top Bar -->
+  <div class="cs-top-bar">
+    <div class="cs-top-container">
+      <div class="cs-top-contact">
+        <a href="tel:555-123-4567" class="cs-top-link">
+          <span class="cs-header-text">CALLOWAY'S LOCATIONS</span>
+        </a>
+        <a href="/locations" class="cs-top-link">
+          <span class="cs-header-text">NURSERY PROFESSIONALS</span>
+        </a>
       </div>
-    </nav>
-    <a href="/contact" class="cs-button-solid cs-nav-button">Contact Us</a>
-    <!--Dark Mode toggle: remove component if you don't want to enable a dark mode toggle-->
-    <DarkModeToggle />
+      <div class="cs-top-social">
+        <a href="#" class="cs-social-link" aria-label="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+        <a href="#" class="cs-social-link" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+        <a href="#" class="cs-social-link" aria-label="Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <div class="cs-main-nav">
+    <div class="cs-container">
+      <!--Nav Logo-->
+      <a href="/" class="cs-logo" aria-label="back to home">
+        <img
+          src="https://images.pexels.com/photos/1002703/pexels-photo-1002703.jpeg?auto=compress&cs=tinysrgb&w=200&h=60"
+          alt="Calloway's Nursery"
+          width="200"
+          height="60"
+          aria-hidden="true"
+          decoding="async"
+        />
+      </a>
+      
+      <!--Navigation List-->
+      <nav class="cs-nav" role="navigation">
+        <!--Mobile Nav Toggle-->
+        <button class="cs-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="cs-expanded-ul" aria-label="Toggle mobile menu.">
+          <div class="cs-box" aria-hidden="true">
+            <span class="cs-line cs-line1" aria-hidden="true"></span>
+            <span class="cs-line cs-line2" aria-hidden="true"></span>
+            <span class="cs-line cs-line3" aria-hidden="true"></span>
+          </div>
+        </button>
+        
+        <div class="cs-ul-wrapper">
+          <ul id="cs-expanded-ul" class="cs-ul">
+            {navData.map((entry) => (
+              <li
+                class:list={[
+                  "cs-li",
+                  { "cs-dropdown": entry.children?.length > 0 },
+                ]}
+              >
+                {entry.children?.length > 0 ? (
+                  <button
+                  aria-expanded="false"
+                  aria-controls={`submenu-${entry.key}`}
+                    class:list={[
+                      "cs-li-link cs-dropdown-button",
+                      { "cs-active": Astro.url.pathname.includes(entry.url)},
+                    ]}
+                  >
+                    {entry.key}
+                    <Icon name="mdi--caret" class="cs-drop-icon" />
+                  </button>
+                ) : (
+                  <a
+                    href={entry.url}
+                    class:list={[
+                      "cs-li-link",
+                      { "cs-active": Astro.url.pathname === entry.url },
+                    ]}
+                    aria-current={Astro.url.pathname === entry.url ? "page" : undefined}
+                  >
+                    {entry.key}
+                  </a>
+                )}
+                
+                {entry.children?.length > 0 && (
+                  <ul id={`submenu-${entry.key}`} class="cs-drop-ul">
+                    {entry.children.map((child) => (
+                      <li class="cs-drop-li">
+                        <a 
+                          href={child.url} 
+                          class="cs-li-link cs-drop-link"
+                          aria-current={Astro.url.pathname === child.url ? "page" : undefined}
+                        >
+                          {child.key}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="cs-nav-actions">
+        <a href="/search" class="cs-search-link" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </a>
+        <a href="/cart" class="cs-cart-link" aria-label="Shopping Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cs-cart-count">0</span>
+        </a>
+        <DarkModeToggle />
+      </div>
+    </div>
   </div>
 </header>
 
 <style lang="less">
+/*-- -------------------------- -->
+<---         Top Bar            -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+  .cs-top-bar {
+    background-color: #4a5d3a;
+    padding: (8/16rem) 0;
+    
+    .cs-top-container {
+      width: 100%;
+      max-width: (1280/16rem);
+      margin: auto;
+      padding: 0 (16/16rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .cs-top-contact {
+      display: flex;
+      gap: (24/16rem);
+    }
+    
+    .cs-top-link {
+      text-decoration: none;
+      color: white;
+      font-size: (12/16rem);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      
+      &:hover {
+        color: var(--primary);
+      }
+    }
+    
+    .cs-header-text {
+      font-size: (12/16rem);
+    }
+    
+    .cs-top-social {
+      display: flex;
+      gap: (12/16rem);
+    }
+    
+    .cs-social-link {
+      width: (24/16rem);
+      height: (24/16rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: color 0.3s;
+      
+      &:hover {
+        color: var(--primary);
+      }
+      
+      svg {
+        width: (16/16rem);
+        height: (16/16rem);
+      }
+    }
+  }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+  .cs-top-bar {
+    .cs-header-text {
+      font-size: (13/16rem);
+    }
+  }
+}
 
 /*-- -------------------------- -->
 <---     Mobile Navigation      -->
@@ -108,19 +232,19 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
   }
 
   #cs-navigation {
-    /* remove the font family so the Stitch inherits the fonts from your global stylesheet */
     font-family: "Roboto", "Arial", sans-serif;
     width: 100%;
-    /* prevents padding from affecting height and width */
     box-sizing: border-box;
-    padding: (12/16rem) (16/16rem);
     background-color: #fff;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     position: fixed;
     z-index: 10000;
 
+    .cs-main-nav {
+      padding: (12/16rem) (16/16rem);
+    }
+
     &:before {
-      /* black blurred overlay */
       content: "";
       width: 0%;
       height: 100vh;
@@ -164,10 +288,9 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
 
     .cs-logo {
       width: 40%;
-      max-width: (146/16rem);
-      height: 100%;
+      max-width: (180/16rem);
+      height: (50/16rem);
       margin: 0 auto 0 0;
-      /* prevents padding from affecting height and width */
       box-sizing: border-box;
       padding: 0;
       display: flex;
@@ -178,15 +301,12 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       img {
         width: 100%;
         height: 100%;
-        /* ensures the image never overflows the container. It stays contained within it's width and height and expands to fill it then stops once it reaches an edge */
         object-fit: contain;
-        /* places the image to the left edge of the parent */
         object-position: left;
       }
     }
 
     .cs-toggle {
-      /* 44px - 48px */
       width: clamp(2.75rem, 6vw, 3rem);
       height: clamp(2.75rem, 6vw, 3rem);
       margin: 0 0 0 auto;
@@ -217,9 +337,7 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
     }
 
     .cs-box {
-      /* 24px - 28px */
       width: clamp(1.5rem, 2vw, 1.75rem);
-      /* 14px - 16px */
       height: clamp(0.875rem, 1.5vw, 1rem);
       position: relative;
     }
@@ -281,7 +399,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       min-width: 40%;
       height: 65vh;
       margin: 0;
-      /* 28px - 40px */
       padding: (48/16rem) clamp(1.75rem, 3vw, 2.5rem) (32/16rem) (70/16rem);
       display: flex;
       flex-direction: column;
@@ -297,7 +414,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       width: 100%;
       margin-right: 0;
       opacity: 0;
-      /* transition from these values */
       transform: translateX(-40/16rem);
       transition: transform 0.6s, opacity 0.9s;
 
@@ -319,19 +435,9 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       &:nth-of-type(6) {
         transition-delay: 0.3s;
       }
-      &:nth-of-type(7) {
-        transition-delay: 0.35s;
-      }
-      &:nth-of-type(8) {
-        transition-delay: 0.4s;
-      }
-      &:nth-of-type(9) {
-        transition-delay: 0.45s;
-      }
     }
 
     .cs-li-link {
-      /* 16px - 24px */
       font-size: clamp(1rem, 2.5vw, 1.5rem);
       color: inherit;
       line-height: 1.2em;
@@ -341,7 +447,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       position: relative;
 
       &:before {
-        /* active state underline */
         content: "";
         width: 100%;
         height: 1px;
@@ -360,34 +465,8 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       }
     }
 
-    .cs-button-solid {
+    .cs-nav-actions {
       display: none;
-    }
-  }
-}
-
-/* Dark Mode */
-@media only screen and (max-width: 63.9375rem) {
-  body.dark-mode {
-    #cs-navigation {
-      background-color: var(--dark);
-
-      .cs-logo {
-        /* makes it white */
-        filter: grayscale(1) brightness(1000%);
-      }
-
-      .cs-line {
-        background-color: #fff;
-      }
-
-      .cs-ul-wrapper {
-        background-color: var(--medium);
-      }
-
-      .cs-li-link {
-        color: var(--bodyTextColorWhite);
-      }
     }
   }
 }
@@ -400,9 +479,7 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
 @media only screen and (max-width: 63.9375rem) {
   #cs-navigation {
     .cs-dropdown {
-      color: var(--bodyTextColorWhite);
       color: var(--headerColor);
-
       position: relative;
 
       &.cs-active {
@@ -467,7 +544,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
 
     .cs-li-link {
       &.cs-drop-link {
-        /* 14px - 16px */
         font-size: clamp(0.875rem, 2vw, 1.25rem);
         color: #fff;
       }
@@ -512,7 +588,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       }
     }
 
-
     .cs-drop-icon {
       width: (15/16rem);
       height: auto;
@@ -520,7 +595,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       color: inherit;
       transform: rotate(180deg);
       transition: 0.3s;
-      
     }
 
     .cs-drop-ul {
@@ -532,8 +606,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       opacity: 0;
       border-bottom: 5px solid var(--primary);
       visibility: hidden;
-      /* if you have 8 or more links in your dropdown nav, uncomment the columns property to make the list into 2 even columns. Change it to 3 or 4 if you need extra columns. Then remove the transition delays on the cs-drop-li so they don't have weird scattered animations */
-      // columns: 2;
       position: absolute;
       top: 100%;
       z-index: -100;
@@ -573,27 +645,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       &:nth-of-type(6) {
         transition-delay: 0.3s;
       }
-      &:nth-of-type(7) {
-        transition-delay: 0.35s;
-      }
-      &:nth-of-type(8) {
-        transition-delay: 0.4s;
-      }
-      &:nth-of-type(9) {
-        transition-delay: 0.45s;
-      }
-      &:nth-of-type(10) {
-        transition-delay: 0.5s;
-      }
-      &:nth-of-type(11) {
-        transition-delay: 0.55s;
-      }
-      &:nth-of-type(12) {
-        transition-delay: 0.6s;
-      }
-      &:nth-of-type(13) {
-        transition-delay: 0.65s;
-      }
     }
 
     .cs-li-link {
@@ -603,7 +654,6 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
         text-decoration: none;
         white-space: nowrap;
         width: 100%;
-        /* prevents padding from affecting height and width */
         box-sizing: border-box;
         padding: (12/16rem);
         color: var(--bodyTextColor);
@@ -633,10 +683,191 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
   }
 }
 
+/*-- -------------------------- -->
+<---     Desktop Navigation     -->
+<--- -------------------------- -*/
+
+/* Small Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+  #cs-navigation {
+    font-family: "Roboto", "Arial", sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    position: fixed;
+    z-index: 10000;
+
+    .cs-main-nav {
+      padding: 0 (16/16rem);
+    }
+
+    .cs-container {
+      width: 100%;
+      max-width: (1280/16rem);
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: (24/16rem);
+    }
+
+    .cs-toggle {
+      display: none;
+    }
+
+    .cs-logo {
+      width: auto;
+      max-width: (220/16rem);
+      height: (70/16rem);
+      margin: 0;
+      padding: (10/16rem) 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .cs-ul {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(1.5rem, 2.6vw, 2.5rem);
+    }
+
+    .cs-li {
+      list-style: none;
+      padding: (32/16rem) 0;
+      flex: none;
+    }
+
+    .cs-li-link {
+      font-size: (15/16rem);
+      font-weight: 500;
+      line-height: 1.5em;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 0;
+      color: var(--headerColor);
+      display: block;
+      position: relative;
+      transition: color 0.3s;
+      
+      &:hover {
+        color: var(--primary);
+        &:before {
+          width: 100%;
+        }
+      }
+
+      &.cs-active {
+        color: var(--primary);
+        &:before {
+          width: 100%;
+        }
+      }
+
+      &:before {
+        content: "";
+        width: 0%;
+        height: 2px;
+        background: var(--primary);
+        opacity: 1;
+        display: block;
+        position: absolute;
+        bottom: (0/16rem);
+        left: 0;
+        transition: width 0.3s;
+      }
+    }
+
+    .cs-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: (16/16rem);
+    }
+
+    .cs-search-link,
+    .cs-cart-link {
+      width: (40/16rem);
+      height: (40/16rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--headerColor);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+
+      &:hover {
+        color: var(--primary);
+      }
+
+      svg {
+        width: (20/16rem);
+        height: (20/16rem);
+      }
+    }
+
+    .cs-cart-count {
+      position: absolute;
+      top: (-4/16rem);
+      right: (-4/16rem);
+      background: var(--primary);
+      color: white;
+      font-size: (10/16rem);
+      font-weight: 600;
+      width: (16/16rem);
+      height: (16/16rem);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
 /* Dark Mode */
 @media only screen and (min-width: 0rem) {
   body.dark-mode {
+    .cs-top-bar {
+      background-color: var(--dark);
+    }
+
     #cs-navigation {
+      background-color: var(--dark);
+
+      .cs-logo {
+        filter: grayscale(1) brightness(1000%);
+      }
+
+      .cs-line {
+        background-color: #fff;
+      }
+
+      .cs-ul-wrapper {
+        background-color: var(--medium);
+      }
+
+      .cs-li-link {
+        color: var(--bodyTextColorWhite);
+      }
+
+      .cs-search-link,
+      .cs-cart-link {
+        color: var(--bodyTextColorWhite);
+      }
+
       .cs-drop-ul {
         background-color: var(--dark);
       }
@@ -650,140 +881,7 @@ import DarkModeToggle from "@components/DarkModeToggle.astro";
       }
 
       .cs-drop-icon {
-        /* turns it white */
         filter: grayscale(1) brightness(1000%);
-      }
-    }
-  }
-}
-
-/*-- -------------------------- -->
-<---     Desktop Navigation     -->
-<--- -------------------------- -*/
-
-/* Small Desktop - 1024px */
-@media only screen and (min-width: 64rem) {
-  #cs-navigation {
-    /* remove the font family so the Stitch inherits the fonts from your global stylesheet */
-    font-family: "Roboto", "Arial", sans-serif;
-    width: 100%;
-    /* prevents padding from affecting height and width */
-    box-sizing: border-box;
-    padding: 0 (16/16rem);
-    background-color: #fff;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    position: fixed;
-    z-index: 10000;
-
-    .cs-container {
-      width: 100%;
-      max-width: (1280/16rem);
-      margin: auto;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: (24/16rem);
-    }
-
-    .cs-toggle {
-      display: none;
-    }
-
-    .cs-logo {
-      width: 18.4%;
-      max-width: (350/16rem);
-      height: (65/16rem);
-      /* margin-right auto pushes everything away from it to the right */
-      margin: 0 auto 0 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-
-      img {
-        width: 100%;
-        height: 100%;
-        /* ensures the image never overflows the container. It stays contained within it's width and height and expands to fill it then stops once it reaches an edge */
-        object-fit: contain;
-      }
-    }
-
-    .cs-ul {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      /* 20px - 36px */
-      gap: clamp(1.25rem, 2.6vw, 2.25rem);
-    }
-
-    .cs-li {
-      list-style: none;
-      padding: (32/16rem) 0;
-      /* prevent flexbox from squishing it */
-      flex: none;
-    }
-
-    .cs-li-link {
-      /* 14px - 16px */
-      font-size: clamp(0.875rem, 1vw, 1rem);
-      line-height: 1.5em;
-      text-decoration: none;
-      margin: 0;
-      color: var(--bodyTextColor);
-      display: block;
-      position: relative;
-      &:hover {
-        &:before {
-          width: 100%;
-        }
-      }
-
-      &.cs-active {
-        &:before {
-          width: 100%;
-        }
-      }
-
-      &:before {
-        /* active state underline */
-        content: "";
-        width: 0%;
-        height: 2px;
-        background: var(--primary);
-        opacity: 1;
-        display: block;
-        position: absolute;
-        bottom: (0/16rem);
-        left: 0;
-        transition: width 0.3s;
-      }
-    }
-  }
-}
-
-/* Dark Mode */
-@media only screen and (min-width: 64rem) {
-  body.dark-mode {
-    #cs-navigation {
-      background-color: var(--dark);
-
-      .cs-logo {
-        /* makes it turn white */
-        filter: grayscale(1) brightness(1000%);
-      }
-
-      .cs-li-link {
-        color: var(--bodyTextColorWhite);
-      }
-
-      .cs-li-link {
-        &:before {
-          background-color: var(--primaryLight);
-        }
       }
     }
   }
