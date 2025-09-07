@@ -5,32 +5,37 @@
     "children": []
   },
   {
-    "key": "About Us",
-    "url": "/about/",
+    "key": "Plants & Flowers",
+    "url": "/plants/",
     "children": []
   },
   {
-    "key": "Projects",
-    "url": "/projects/",
+    "key": "Garden Supplies",
+    "url": "/supplies/",
     "children": [
       {
-        "key": "Project 1",
-        "url": "/projects/project-1/"
+        "key": "Tools",
+        "url": "/supplies/tools/"
       },
       {
-        "key": "Project 2",
-        "url": "/projects/project-2/"
+        "key": "Fertilizers",
+        "url": "/supplies/fertilizers/"
       }
     ]
   },
   {
-    "key": "Reviews",
-    "url": "/reviews/",
+    "key": "Landscaping",
+    "url": "/landscaping/",
     "children": []
   },
   {
     "key": "Blog",
     "url": "/blog/",
-    "children": []     
+    "children": []
+  },
+  {
+    "key": "About",
+    "url": "/about/",
+    "children": []
   }
 ]
